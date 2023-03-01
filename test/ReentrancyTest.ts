@@ -14,7 +14,7 @@ describe("Reentrancy Attack in Progress", function () {
     reentranceContract = await reentranceFactory.deploy();
     await reentranceContract.deployed();
 
-    //This give us one addresses with a lot of Eth in her wallet.
+    //This give us one addresse with a lot of Eth in her wallet.
     [aliceAddress] = await ethers.getSigners();
 
     //Alice Sends 0.001 ETH to the Reentracy Contract
