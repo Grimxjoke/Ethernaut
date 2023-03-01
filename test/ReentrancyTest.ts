@@ -17,6 +17,7 @@ describe("Reentrancy Attack in Progress", function () {
     //This give us one addresses with a lot of Eth in her wallet.
     [aliceAddress] = await ethers.getSigners();
 
+    //Alice Sends 0.001 ETH to the Reentracy Contract
     let tx = await reentranceContract
       .connect(aliceAddress)
       .donate(aliceAddress.address, {
@@ -50,12 +51,14 @@ describe("Reentrancy Attack in Progress", function () {
   });
 
   it("The Balance of The HackerContractAddress in the Reentrancy should be 0.001 ETH ", async function () {
+    //Check the Mapping in the Reentrancy Contract for the HackerContract Address
     const hackerBalanceInReentrancy =
       await reentranceContract.callStatic.balances(hackerContract.address);
     expect(hackerBalanceInReentrancy).to.equal(parseEther("0.001"));
   });
 
   it("Should withdraw all the balance from the Reentrance Contract ", async function () {
+    //Attack Function from the HAcker Contract
     let tx = await hackerContract.attack(parseEther("0.001"));
     await tx.wait();
 
